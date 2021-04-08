@@ -7,12 +7,12 @@ This is the offical repo for our paper: [KoParadigm: A Korean Conjugation Paradi
 To create the full paradigm set of a language is sometimes tricky. It is particularly so when we deal with a morphologically rich language like Korean.
 Inflection of Korean verbs is notorisouly complicated. Typically, a Korean verb can combine with more than 100 endings. What is worse, the combination rules are not simple at all.
  They are determined by the sound of the verb/ending, and the part-of-speech of the verb (action / descriptive). That's why so far there's no open sources of Korean paradigm generator, I think.
- Here's the first one. With KoParadigm, you can easily get the full paradigm of a Korean verb. 
- 
+ Here's the first one. With KoParadigm, you can easily get the full paradigm of a Korean verb.
+
 ## Dependencies
-* python >=3.6
+* python >=3.9
 * jamo >=0.4.1
-* xlrd == 1.2.0
+* openpyxl >=3.0.7
 
 ## Installation
 ```

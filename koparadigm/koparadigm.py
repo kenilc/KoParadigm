@@ -1,24 +1,26 @@
-import xlrd
+import openpyxl
 from jamo import h2j, j2h, hcj_to_jamo, is_hcj
 import re
 import os
 
-RESOURCE = xlrd.open_workbook(os.path.dirname(os.path.abspath(__file__)) + "/koparadigm.xlsx")
+RESOURCE = openpyxl.load_workbook(os.path.dirname(os.path.abspath(__file__)) + "/koparadigm.xlsx")
 
 class Paradigm(object):
     def __init__(self):
         self.verb2verb_classes = self.make_verb2verb_classes()
         self.ending_class2endings = self.make_ending_class2endings()
         self.verb_class2rules = self.make_verb_class2rules()
-        
+
 
     def make_verb2verb_classes(self):
         verb2verb_classes = dict() # e.g., {"곱": [1,2]}
 
-        sh = RESOURCE.sheet_by_name("Verbs")
-        for rx in range(1, sh.nrows):
-            verb = sh.row(rx)[1].value
-            verb_class = int(sh.row(rx)[2].value)
+        sh = RESOURCE.get_sheet_by_name("Verbs")
+        for i, row in enumerate(sh.rows):
+            if i == 0:
+                continue
+            verb = row[1].value
+            verb_class = int(row[2].value)
             if verb in verb2verb_classes:
                 verb2verb_classes[verb].append(verb_class)
             else:
@@ -29,10 +31,12 @@ class Paradigm(object):
     def make_ending_class2endings(self):
         ending_class2endings = dict()  # e.g., {1: ["어야", "어서]}
 
-        sh = RESOURCE.sheet_by_name("Endings")
-        for rx in range(1, sh.nrows):
-            ending = sh.row(rx)[1].value
-            ending_class = int(sh.row(rx)[2].value)
+        sh = RESOURCE.get_sheet_by_name("Endings")
+        for i, row in enumerate(sh.rows):
+            if i == 0:
+                continue
+            ending = row[1].value
+            ending_class = int(row[2].value)
             if ending_class in ending_class2endings:
                 ending_class2endings[ending_class].append(ending)
             else:
@@ -42,22 +46,24 @@ class Paradigm(object):
 
     def make_verb_class2rules(self):
         verb_class2rules = dict()
-        sh = RESOURCE.sheet_by_name("Template")
+        sh = RESOURCE.get_sheet_by_name("Template")
 
-        ending_classes = sh.row(0)[2:]
-        for rx in range(2, sh.nrows):
-            verb_class = int(sh.row(rx)[0].value)
-            for i, ending_class in enumerate(ending_classes, start=2):
-                ending_class = int(ending_class.value)
-                rule = sh.row(rx)[i].value
-                if rule != "":
-                    rule = rule[1:-1] # (...)
-                rule = (ending_class, rule)
+        for i, row in enumerate(sh.rows):
+            if i == 0:
+                ending_classes = row[2:]
+            elif i >= 2:
+                verb_class = int(row[0].value)
+                for i, ending_class in enumerate(ending_classes, start=2):
+                    ending_class = int(ending_class.value)
+                    rule = row[i].value
+                    if rule:
+                        rule = rule[1:-1] # (...)
+                    rule = (ending_class, rule)
 
-                if verb_class in verb_class2rules:
-                    verb_class2rules[verb_class].append(rule)
-                else:
-                    verb_class2rules[verb_class] = [rule]
+                    if verb_class in verb_class2rules:
+                        verb_class2rules[verb_class].append(rule)
+                    else:
+                        verb_class2rules[verb_class] = [rule]
 
         return verb_class2rules
 

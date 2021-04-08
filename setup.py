@@ -5,12 +5,12 @@ with open("README.md", mode="r", encoding="utf-8") as fh:
 
 REQUIRED_PACKAGES = [
     'jamo>=0.4.1',
-    'xlrd==1.2.0',
+    'openpyxl>=3.0.7'
 ]
 
 setuptools.setup(
     name="koparadigm",
-    version="0.10.0",
+    version="0.10.1",
     author="Kyubyong Park",
     author_email="kbpark.linguist@gmail.com",
     description="Korean Conjugation Paradigm Generator",
@@ -21,7 +21,7 @@ setuptools.setup(
     url="https://github.com/Kyubyong/paradigm",
     packages=setuptools.find_packages(),
     package_data={'koparadigm': ['koparadigm/koparadigm.xlsx']},
-    python_requires=">=3.6",
+    python_requires=">=3.9",
     include_package_data=True,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -30,7 +30,6 @@ setuptools.setup(
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.9',
     ],
 )
