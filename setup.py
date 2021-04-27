@@ -21,7 +21,7 @@ setuptools.setup(
     url="https://github.com/Kyubyong/paradigm",
     packages=setuptools.find_packages(),
     package_data={'koparadigm': ['koparadigm/koparadigm.xlsx']},
-    python_requires=">=3.9",
+    python_requires=">=3.7",
     include_package_data=True,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -30,6 +30,8 @@ setuptools.setup(
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
     ],
 )
